@@ -16,6 +16,9 @@
 		B655ABD22763730B00501B8F /* SearchIOSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABD12763730B00501B8F /* SearchIOSAppTests.swift */; };
 		B655ABDC2763730B00501B8F /* SearchIOSAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABDB2763730B00501B8F /* SearchIOSAppUITests.swift */; };
 		B655ABDE2763730B00501B8F /* SearchIOSAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABDD2763730B00501B8F /* SearchIOSAppUITestsLaunchTests.swift */; };
+		B6917E2B2763752B00FA44BE /* Storyboard+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6917E2A2763752B00FA44BE /* Storyboard+Additions.swift */; };
+		B6917E2E2763764900FA44BE /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6917E2D2763764900FA44BE /* AppRouter.swift */; };
+		B6917E322763794700FA44BE /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6917E312763794700FA44BE /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		B655ABD72763730B00501B8F /* SearchIOSAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchIOSAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B655ABDB2763730B00501B8F /* SearchIOSAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIOSAppUITests.swift; sourceTree = "<group>"; };
 		B655ABDD2763730B00501B8F /* SearchIOSAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIOSAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B6917E2A2763752B00FA44BE /* Storyboard+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Storyboard+Additions.swift"; sourceTree = "<group>"; };
+		B6917E2D2763764900FA44BE /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		B6917E312763794700FA44BE /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +105,12 @@
 		B655ABB92763730800501B8F /* SearchIOSApp */ = {
 			isa = PBXGroup;
 			children = (
+				B6917E302763791F00FA44BE /* HomeModule */,
+				B6917E2F2763784C00FA44BE /* Networking */,
+				B6917E2C2763763A00FA44BE /* common */,
+				B655ABEA276374E900501B8F /* Extensions */,
 				B655ABBA2763730800501B8F /* AppDelegate.swift */,
 				B655ABBC2763730800501B8F /* SceneDelegate.swift */,
-				B655ABBE2763730800501B8F /* ViewController.swift */,
 				B655ABC02763730800501B8F /* Main.storyboard */,
 				B655ABC32763730A00501B8F /* Assets.xcassets */,
 				B655ABC52763730A00501B8F /* LaunchScreen.storyboard */,
@@ -125,6 +134,38 @@
 				B655ABDD2763730B00501B8F /* SearchIOSAppUITestsLaunchTests.swift */,
 			);
 			path = SearchIOSAppUITests;
+			sourceTree = "<group>";
+		};
+		B655ABEA276374E900501B8F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B6917E2A2763752B00FA44BE /* Storyboard+Additions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B6917E2C2763763A00FA44BE /* common */ = {
+			isa = PBXGroup;
+			children = (
+				B6917E2D2763764900FA44BE /* AppRouter.swift */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		B6917E2F2763784C00FA44BE /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		B6917E302763791F00FA44BE /* HomeModule */ = {
+			isa = PBXGroup;
+			children = (
+				B655ABBE2763730800501B8F /* ViewController.swift */,
+				B6917E312763794700FA44BE /* ViewModel.swift */,
+			);
+			path = HomeModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +301,9 @@
 			files = (
 				B655ABBF2763730800501B8F /* ViewController.swift in Sources */,
 				B655ABBB2763730800501B8F /* AppDelegate.swift in Sources */,
+				B6917E2B2763752B00FA44BE /* Storyboard+Additions.swift in Sources */,
+				B6917E2E2763764900FA44BE /* AppRouter.swift in Sources */,
+				B6917E322763794700FA44BE /* ViewModel.swift in Sources */,
 				B655ABBD2763730800501B8F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
