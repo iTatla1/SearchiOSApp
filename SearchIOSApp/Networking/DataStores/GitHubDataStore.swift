@@ -21,7 +21,9 @@ class GitHubDataStoreImpl: GitHubDataStore {
     let disposeBag = DisposeBag()
     
     func fetchUsers(search: String, pageNumber: Int, pageSize: Int, completion: @escaping FetchUsersCompletion) {
-        provider.rx.request(.searchUsers(query: search, page: pageNumber, pageSize: pageSize)).subscribe { event in
+        provider.rx.request(.searchUsers(query: search, page: pageNumber, pageSize: pageSize), callbackQueue: DispatchQueue.main)
+            .observe(on: MainScheduler.instance)
+            .subscribe { event in
             switch event {
             case .success(let response):
                 completion(GitHubProfileMapper.map(response))

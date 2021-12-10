@@ -11,8 +11,9 @@ import UIKit
 struct HomeBuilder {
     func build() -> UIViewController {
         let viewController = UIStoryboard(.main).instantiate(ViewController.self)
+        viewController.viewModel = VCViewModelImpl(dataStore: GitHubDataStoreImpl())
         let navController = UINavigationController()
         navController.setViewControllers([viewController], animated: true)
-        return viewController
+        return navController
     }
 }

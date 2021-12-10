@@ -8,6 +8,7 @@ target 'SearchIOSApp' do
   # Pods for SearchIOSApp
 
   pod 'Moya/RxSwift', '~> 15.0'
+  pod 'Kingfisher', '~> 7.0'
 
   target 'SearchIOSAppTests' do
     inherit! :search_paths
