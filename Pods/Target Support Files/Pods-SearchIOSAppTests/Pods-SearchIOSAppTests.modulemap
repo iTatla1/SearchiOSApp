@@ -1,0 +1,6 @@
+framework module Pods_SearchIOSAppTests {
+  umbrella header "Pods-SearchIOSAppTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
