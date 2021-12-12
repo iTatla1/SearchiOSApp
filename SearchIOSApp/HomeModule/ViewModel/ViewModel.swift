@@ -62,7 +62,7 @@ class VCViewModelImpl: VCViewModel {
 
     
     func search() {
-        if (pagingController.isLastPage || isLoading || searchString.isEmpty) { return }
+        if (isLoading || searchString.isEmpty) { return }
         
         loaderSubject.onNext(true)
         dataStore.fetchUsers(search: searchString, pageNumber: pagingController.pageNumber, pageSize: pagingController.pageSize)
@@ -101,8 +101,9 @@ class VCViewModelImpl: VCViewModel {
     }
     
     func nextPage() {
-        _ = pagingController.nextPage()
-        search()
+        if pagingController.nextPage() != nil {
+            search()
+        }
     }
     
 }
