@@ -25,18 +25,22 @@ class ViewModelTests: XCTestCase {
     
     func test_viewModel_initalizationDoNotIntiateSearchRequest() {
         let dataStore = GitHubDataStoreSpy()
-        let loaderSubject = PublishSubject<Bool>()
-        let errorLoader = PublishSubject<String>()
-        let models = BehaviorRelay<[CellViewModel]>(value: [])
-        let pagingController = PagingController()
-        
-        let _ = VCViewModelImpl(dataStore: dataStore, loaderSubject: loaderSubject, errorSubject: errorLoader, modelsBehaviour: models, pagingController: pagingController)
+    
+        let _ = makeSUT(dataStore: dataStore)
         
         XCTAssertTrue(dataStore.callBackCount == 0)
     }
     
     
     // MARK: - Helpers
+    
+    private func makeSUT(dataStore: GitHubDataStore,
+                         loaderSubject: PublishSubject<Bool> = PublishSubject<Bool>(),
+                         errorSubject: PublishSubject<String> = PublishSubject<String>(),
+                         modelsBehaviour: BehaviorRelay<[CellViewModel]> = BehaviorRelay<[CellViewModel]>(value: []),
+                         pagingController: PagingController =  PagingController()) -> VCViewModel {
+        return VCViewModelImpl(dataStore: dataStore, loaderSubject: loaderSubject, errorSubject: errorSubject, modelsBehaviour: modelsBehaviour, pagingController: pagingController)
+    }
     
     private class GitHubDataStoreSpy: GitHubDataStore {
         var callBackCount: Int = 0
