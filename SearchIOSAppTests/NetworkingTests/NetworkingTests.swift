@@ -17,14 +17,14 @@ class NetworkingTests: XCTestCase {
     var disposeBag: DisposeBag!
     
     //
-        override func setUp() {
-            super.setUp()
-            disposeBag = DisposeBag()
-        }
+    override func setUp() {
+        super.setUp()
+        disposeBag = DisposeBag()
+    }
     
     override func tearDown() {
         disposeBag = nil
-       super.tearDown()
+        super.tearDown()
     }
     
     func test_OnFetch_returnsConnectivtyErrorOnNon200HTTPResponses() {
@@ -48,6 +48,29 @@ class NetworkingTests: XCTestCase {
             
         }
         wait(for: expectations, timeout: 1)
+    }
+    
+    func test_OnFetch_returnsInValidDataErrorOnInValidDataHTTPResponses() {
+        
+        let invalidData = Data("Any invalid Data".utf8)
+        let sut = makeSUT(for: 200, data: invalidData)
+        let expectation = expectation(description: "Wait for async Code")
+        sut.fetchUsers(search: "23", pageNumber: 1, pageSize: 12)
+            .subscribe { _ in
+                XCTFail("Expected to fail with connectivity error")
+            } onFailure: { error in
+                guard let error = error as? ApiError else {
+                    XCTFail("Expected to fail with API Error invalidData error")
+                    return
+                }
+                XCTAssertEqual(ApiError.invalidData, error)
+                expectation.fulfill()
+            }
+            .disposed(by: disposeBag)
+        
+        
+        
+        wait(for: [expectation], timeout: 1)
     }
     
     // MARK: - Helper Methods
