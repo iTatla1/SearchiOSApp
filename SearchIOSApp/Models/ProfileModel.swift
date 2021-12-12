@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProfileModel {
+struct ProfileModel: Equatable {
     let name: String
     let type: String
     let imageURL: URL

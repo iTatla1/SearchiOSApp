@@ -13,10 +13,8 @@ import RxSwift
 @testable import SearchIOSApp
 
 class NetworkingTests: XCTestCase {
-    
     var disposeBag: DisposeBag!
     
-    //
     override func setUp() {
         super.setUp()
         disposeBag = DisposeBag()
@@ -67,11 +65,25 @@ class NetworkingTests: XCTestCase {
                 expectation.fulfill()
             }
             .disposed(by: disposeBag)
-        
-        
-        
         wait(for: [expectation], timeout: 1)
     }
+    
+    
+    func test_OnFetch_returnsEmptyProfileModelArrayOnEmptyValidPResponses() {
+        
+        let sut = makeSUT(for: 200, data: makeProfileModelsData(from: []))
+        let expectation = expectation(description: "Wait for async Code")
+        sut.fetchUsers(search: "23", pageNumber: 1, pageSize: 12)
+            .subscribe { profiles in
+               XCTAssertEqual(profiles, [], "Expected to Complete with Empty empty profiles response")
+                expectation.fulfill()
+            } onFailure: { error in
+                XCTFail("Expected to succeed with empty Profiles Response")
+            }
+            .disposed(by: disposeBag)
+        wait(for: [expectation], timeout: 1)
+    }
+    
     
     // MARK: - Helper Methods
     
@@ -97,6 +109,18 @@ class NetworkingTests: XCTestCase {
         return Data()
     }
     
+    private func makeProfileModel(name: String, type: String, imageURL: URL) -> (model: ProfileModel, json: [String: Any]) {
+        let model = ProfileModel(name: name, type: type, imageURL: imageURL)
+        let json: [String: Any] = [
+            "login": name,
+            "avatar_url": imageURL.absoluteString,
+            "type": type
+        ]
+        return (model, json)
+    }
     
-    
+    private func makeProfileModelsData(from profiles: [[String: Any]]) -> Data {
+        let items = ["items": profiles]
+        return try! JSONSerialization.data(withJSONObject: items)
+    }
 }
