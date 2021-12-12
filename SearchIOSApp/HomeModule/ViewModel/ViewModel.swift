@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 protocol VCViewModel {
+    var navTitle: String {get}
     var loaderSubject: PublishSubject<Bool> {get}
     var errorSubject: PublishSubject<String> {get}
     var cellModelObservalble: Observable<[CellViewModel]> {get}
@@ -31,6 +32,7 @@ class VCViewModelImpl: VCViewModel {
                 search()
         }
     }
+    let navTitle: String
     
     private let pagingController: PagingController
     private var loadingRelay = BehaviorRelay<Bool>(value:false)
@@ -47,7 +49,8 @@ class VCViewModelImpl: VCViewModel {
         loaderSubject: PublishSubject<Bool> = PublishSubject<Bool>(),
         errorSubject: PublishSubject<String> = PublishSubject<String>(),
         modelsBehaviour: BehaviorRelay<[CellViewModel]> = BehaviorRelay<[CellViewModel]>(value: []),
-        pagingController: PagingController =  PagingController()
+        pagingController: PagingController =  PagingController(),
+        navTitle: String = "Search Github Profiles"
     ){
         self.dataStore = dataStore
         self.loaderSubject = loaderSubject
@@ -55,6 +58,7 @@ class VCViewModelImpl: VCViewModel {
         self.modelsBehaviourRelay = modelsBehaviour
         self.searchString = ""
         self.pagingController = pagingController
+        self.navTitle = navTitle
         
         loaderSubject.bind(to: loadingRelay).disposed(by: disposeBag)
     }

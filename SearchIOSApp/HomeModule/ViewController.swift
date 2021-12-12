@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        navigationItem.title = "Search Github Profiles"
+        navigationItem.title = viewModel.navTitle
         activityIndivator = UIActivityIndicatorView()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndivator)
     }
