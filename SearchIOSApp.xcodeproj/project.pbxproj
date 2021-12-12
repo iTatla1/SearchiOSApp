@@ -12,6 +12,7 @@
 		9B4A0B8A2C6474B21FB39EFC /* Pods_SearchIOSAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6155F4524BC3E44F01104FDA /* Pods_SearchIOSAppTests.framework */; };
 		B632777F2765A2B90091FE7C /* GitHubProfileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B632777E2765A2B90091FE7C /* GitHubProfileParser.swift */; };
 		B63277812765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63277802765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift */; };
+		B63277842765F0D80091FE7C /* PagingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63277832765F0D80091FE7C /* PagingController.swift */; };
 		B655ABBB2763730800501B8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABBA2763730800501B8F /* AppDelegate.swift */; };
 		B655ABBD2763730800501B8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABBC2763730800501B8F /* SceneDelegate.swift */; };
 		B655ABBF2763730800501B8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABBE2763730800501B8F /* ViewController.swift */; };
@@ -60,6 +61,7 @@
 		92F346D7C161B404CF358F32 /* Pods-SearchIOSApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchIOSApp.debug.xcconfig"; path = "Target Support Files/Pods-SearchIOSApp/Pods-SearchIOSApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B632777E2765A2B90091FE7C /* GitHubProfileParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubProfileParser.swift; sourceTree = "<group>"; };
 		B63277802765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimitiveSequence+ConnectivityError.swift"; sourceTree = "<group>"; };
+		B63277832765F0D80091FE7C /* PagingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingController.swift; sourceTree = "<group>"; };
 		B655ABB72763730800501B8F /* SearchIOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchIOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B655ABBA2763730800501B8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B655ABBC2763730800501B8F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +148,14 @@
 			path = Parsers;
 			sourceTree = "<group>";
 		};
+		B63277822765F0C50091FE7C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B63277832765F0D80091FE7C /* PagingController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		B655ABAE2763730800501B8F = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +232,7 @@
 		B6917E2F2763784C00FA44BE /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				B63277822765F0C50091FE7C /* Controller */,
 				B632777D2765A29E0091FE7C /* Parsers */,
 				B6917E3E276385C200FA44BE /* Errors */,
 				B6917E382763816F00FA44BE /* DataStores */,
@@ -575,6 +586,7 @@
 				B6917E2E2763764900FA44BE /* AppRouter.swift in Sources */,
 				B6917E422763CED200FA44BE /* UserCell.swift in Sources */,
 				B6917E322763794700FA44BE /* ViewModel.swift in Sources */,
+				B63277842765F0D80091FE7C /* PagingController.swift in Sources */,
 				B63277812765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift in Sources */,
 				B655ABBD2763730800501B8F /* SceneDelegate.swift in Sources */,
 				B6917E482763D02000FA44BE /* CellViewModel.swift in Sources */,

@@ -9,18 +9,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-//enum VCViewModelOutPut {
-//    case showProgress(loading: Bool)
-//    case refreshData
-//    case showError(message: String)
-//}
-
 protocol VCViewModel {
     var loaderSubject: PublishSubject<Bool> {get}
     var errorSubject: PublishSubject<String> {get}
     var cellModelObservalble: Observable<[CellViewModel]> {get}
     var searchString: String {get set}
-    
     func pullToRefresh()
     func nextPage()
 }
@@ -39,9 +32,7 @@ class VCViewModelImpl: VCViewModel {
         }
     }
     
-    private var pageSize: Int = 9
-    private var pageNumber: Int = 1
-    private var isLastPage: Bool = false
+    private let pagingController: PagingController
     private var loadingRelay = BehaviorRelay<Bool>(value:false)
     private let dataStore: GitHubDataStore
     private let disposeBag = DisposeBag()
@@ -51,25 +42,30 @@ class VCViewModelImpl: VCViewModel {
         loadingRelay.value
     }
     
-    init(dataStore: GitHubDataStore, loaderSubject: PublishSubject<Bool> = PublishSubject<Bool>(), errorSubject: PublishSubject<String> = PublishSubject<String>(), modelsBehaviour: BehaviorRelay<[CellViewModel]> = BehaviorRelay<[CellViewModel]>(value: [])){
+    init(
+        dataStore: GitHubDataStore,
+        loaderSubject: PublishSubject<Bool> = PublishSubject<Bool>(),
+        errorSubject: PublishSubject<String> = PublishSubject<String>(),
+        modelsBehaviour: BehaviorRelay<[CellViewModel]> = BehaviorRelay<[CellViewModel]>(value: []),
+        pagingController: PagingController =  PagingController()
+    ){
         self.dataStore = dataStore
         self.loaderSubject = loaderSubject
         self.errorSubject = errorSubject
         self.modelsBehaviourRelay = modelsBehaviour
         self.searchString = ""
+        self.pagingController = pagingController
         
         loaderSubject.bind(to: loadingRelay).disposed(by: disposeBag)
     }
 
-    
-    func viewDidLoad() {
-        
-    }
+
     
     func search() {
-        if (isLastPage || isLoading || searchString.isEmpty) { return }
+        if (pagingController.isLastPage || isLoading || searchString.isEmpty) { return }
+        
         loaderSubject.onNext(true)
-        dataStore.fetchUsers(search: searchString, pageNumber: pageNumber, pageSize: pageSize)
+        dataStore.fetchUsers(search: searchString, pageNumber: pagingController.pageNumber, pageSize: pagingController.pageSize)
             .observe(on: MainScheduler.instance)
             .subscribe {[weak self] profiles in
                 guard let self = self else {return}
@@ -88,8 +84,8 @@ class VCViewModelImpl: VCViewModel {
     }
     
     func manageFetchedProfiles(profiles: [ProfileModel]){
-        if profiles.count < self.pageSize {
-            self.isLastPage = true
+        if profiles.count < self.pagingController.pageSize {
+            self.pagingController.isLastPage = true
         }
         modelsBehaviourRelay.accept(modelsBehaviourRelay.value + profiles.map{.init($0)})
     }
@@ -100,15 +96,13 @@ class VCViewModelImpl: VCViewModel {
     }
     
     func reset() {
-        pageNumber = 1
+        pagingController.reset()
         modelsBehaviourRelay.accept([])
     }
     
     func nextPage() {
-        if !isLastPage && !isLoading {
-            pageNumber += 1
-            search()
-        }
+        _ = pagingController.nextPage()
+        search()
     }
     
 }
