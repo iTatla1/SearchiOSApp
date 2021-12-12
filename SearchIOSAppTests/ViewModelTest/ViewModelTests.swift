@@ -28,9 +28,26 @@ class ViewModelTests: XCTestCase {
     
         let _ = makeSUT(dataStore: dataStore)
         
-        XCTAssertTrue(dataStore.callBackCount == 0)
+        XCTAssertTrue(dataStore.messages.count == 0)
     }
     
+    func test_viewModel_changingSearchTriggersSearchRequest() {
+        let dataStore = GitHubDataStoreSpy()
+    
+        var viewModel = makeSUT(dataStore: dataStore)
+        viewModel.searchString = "Dummy Search String"
+        
+        XCTAssertTrue(dataStore.messages.count == 1)
+    }
+    
+//    func test_viewModel_changingSearchTriggersSearchRequest() {
+//        let dataStore = GitHubDataStoreSpy()
+//
+//        var viewModel = makeSUT(dataStore: dataStore)
+//        viewModel.searchString = "Dummy Search String"
+//
+//        XCTAssertTrue(dataStore.callBackCount == 1)
+//    }
     
     // MARK: - Helpers
     
@@ -43,10 +60,10 @@ class ViewModelTests: XCTestCase {
     }
     
     private class GitHubDataStoreSpy: GitHubDataStore {
-        var callBackCount: Int = 0
+        var messages: [(search: String, pageNumber: Int, pageSize: Int)] = []
         
         func fetchUsers(search: String, pageNumber: Int, pageSize: Int) -> Single<[ProfileModel]> {
-            callBackCount += 1
+            messages.append((search, pageNumber, pageSize))
     
             return Observable.just([]).asSingle()
         }
