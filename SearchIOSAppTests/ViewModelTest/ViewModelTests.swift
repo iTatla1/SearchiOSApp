@@ -62,6 +62,7 @@ class ViewModelTests: XCTestCase {
         var viewModel = makeSUT(dataStore: dataStore, pagingController: pagination)
         viewModel.searchString = searchString
         
+        XCTAssertFalse(dataStore.messages.isEmpty)
         XCTAssertEqual(dataStore.messages[0].search, searchString)
         XCTAssertEqual(dataStore.messages[0].pageNumber, pageNumber)
         XCTAssertEqual(dataStore.messages[0].pageSize, pageSize)
@@ -192,12 +193,24 @@ class ViewModelTests: XCTestCase {
         XCTAssertTrue(dataStore.messages.count == 0)
     }
     
+    func test_viewModel_SearchNewStringResetsPagination() {
+        
+        let dataStore = GitHubDataStoreSpy()
+        let searchString = "search string"
+
+        let paginationController = PagingControllerSubClass()
+        var viewModel = makeSUT(dataStore: dataStore, pagingController: paginationController)
+        viewModel.searchString = searchString
+        XCTAssertTrue(paginationController.resetCallBackCount == 1)
+        XCTAssertTrue(dataStore.messages.count == 1)
+    }
+    
     func test_viewModel_OnPullToRefeshResetsSearch() {
         
         let dataStore = GitHubDataStoreSpy()
         let searchString = "search string"
 
-        let paginationController = PagingController()
+        let paginationController = PagingControllerSubClass()
         var viewModel = makeSUT(dataStore: dataStore, pagingController: paginationController)
         viewModel.searchString = searchString
         
@@ -207,6 +220,7 @@ class ViewModelTests: XCTestCase {
         viewModel.pullToRefresh()
         
         //Search Called Second time
+        XCTAssertTrue(paginationController.resetCallBackCount == 2)
         XCTAssertTrue(dataStore.messages.count == 2)
         XCTAssertTrue(paginationController.isLastPage)
     }
@@ -256,6 +270,15 @@ class ViewModelTests: XCTestCase {
                 return Observable.just([]).asSingle()
             }
            
+        }
+    }
+    
+    private class PagingControllerSubClass: PagingController {
+        var resetCallBackCount: Int = 0
+        
+        override func reset() {
+            super.reset()
+            resetCallBackCount += 1
         }
     }
 }

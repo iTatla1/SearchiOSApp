@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class PagingController {
+class PagingController {
     let pageSize: Int
     var pageNumber: Int
     var isLastPage: Bool
