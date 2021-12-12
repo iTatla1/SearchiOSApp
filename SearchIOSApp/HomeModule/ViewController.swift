@@ -21,32 +21,49 @@ class ViewController: UIViewController {
     }
 
     private func setupView() {
-        tableView.delegate = self
-        tableView.dataSource = self
+        bindTableView()
         setupSearchBar()
+        tableView.delegate = self
+    }
+    
+    private func bindTableView() {
+        viewModel.cellModelObservalble
+            .bind(to: tableView.rx.items) { (tableView: UITableView, index: Int, cellVM: CellViewModel) in
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: IndexPath(row: index, section: 0)) as? UserCell else { return UITableViewCell()}
+                cell.configure(viewModel: cellVM)
+                return cell
+            }.disposed(by: disposeBag)
+        
+        
     }
     
     private func setupSearchBar() {
        let searchBar = UISearchBar()
-        searchBar.delegate = self
+        searchBar.rx.text.orEmpty
+            .filter{!$0.isEmpty}
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] searchString in
+                guard let self = self else {return}
+                self.viewModel.searchString = searchString
+            })
+            .disposed(by: disposeBag)
         navigationItem.titleView = searchBar
     }
     
     private func bindViewModel(){
-        viewModel.bindClosure = { output in
-            switch output {
-            case .refreshData:
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                   
-                
-            case .showError(_):
-                break
-            case .showProgress(_):
-                break
-            }
-        }
+        viewModel.loaderSubject
+            .subscribe(onNext: {[weak self] isLoading in
+                guard let self = self else {return}
+                print("Is Loading \(isLoading)")
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.errorSubject.subscribe(onNext: {[weak self] error in
+            guard let self = self else {return}
+            print("Error: \(error)")
+        })
+        .disposed(by: disposeBag)
+
     }
 }
 
@@ -58,22 +75,9 @@ extension ViewController: UISearchBarDelegate {
 }
 
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.cellCount
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: UserCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserCell else {
-            return UITableViewCell()
-        }
-        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
-        return cell
-    }
-    
+extension ViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView.isDragging else {return}
-        
         if (scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height {
             viewModel.nextPage()
         }

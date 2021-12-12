@@ -10,6 +10,8 @@
 		1568E9BD724FF98466751C37 /* Pods_SearchIOSApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC10C065E7A4E620511B94F /* Pods_SearchIOSApp.framework */; };
 		760C0E04CFC29E69DE958330 /* Pods_SearchIOSApp_SearchIOSAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1AA615E713EBDB2D01CFD6 /* Pods_SearchIOSApp_SearchIOSAppUITests.framework */; };
 		9B4A0B8A2C6474B21FB39EFC /* Pods_SearchIOSAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6155F4524BC3E44F01104FDA /* Pods_SearchIOSAppTests.framework */; };
+		B632777F2765A2B90091FE7C /* GitHubProfileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B632777E2765A2B90091FE7C /* GitHubProfileParser.swift */; };
+		B63277812765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63277802765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift */; };
 		B655ABBB2763730800501B8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABBA2763730800501B8F /* AppDelegate.swift */; };
 		B655ABBD2763730800501B8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABBC2763730800501B8F /* SceneDelegate.swift */; };
 		B655ABBF2763730800501B8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B655ABBE2763730800501B8F /* ViewController.swift */; };
@@ -56,6 +58,8 @@
 		7469AE08C90D993A1850A45F /* Pods-SearchIOSAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchIOSAppTests.debug.xcconfig"; path = "Target Support Files/Pods-SearchIOSAppTests/Pods-SearchIOSAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8AC10C065E7A4E620511B94F /* Pods_SearchIOSApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SearchIOSApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92F346D7C161B404CF358F32 /* Pods-SearchIOSApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchIOSApp.debug.xcconfig"; path = "Target Support Files/Pods-SearchIOSApp/Pods-SearchIOSApp.debug.xcconfig"; sourceTree = "<group>"; };
+		B632777E2765A2B90091FE7C /* GitHubProfileParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubProfileParser.swift; sourceTree = "<group>"; };
+		B63277802765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimitiveSequence+ConnectivityError.swift"; sourceTree = "<group>"; };
 		B655ABB72763730800501B8F /* SearchIOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchIOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B655ABBA2763730800501B8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B655ABBC2763730800501B8F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +138,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B632777D2765A29E0091FE7C /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				B632777E2765A2B90091FE7C /* GitHubProfileParser.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
 		B655ABAE2763730800501B8F = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				B6917E2A2763752B00FA44BE /* Storyboard+Additions.swift */,
+				B63277802765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -209,6 +222,7 @@
 		B6917E2F2763784C00FA44BE /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				B632777D2765A29E0091FE7C /* Parsers */,
 				B6917E3E276385C200FA44BE /* Errors */,
 				B6917E382763816F00FA44BE /* DataStores */,
 				B6917E352763815A00FA44BE /* EndPoints */,
@@ -323,6 +337,7 @@
 				B655ABC92763730B00501B8F /* Sources */,
 				B655ABCA2763730B00501B8F /* Frameworks */,
 				B655ABCB2763730B00501B8F /* Resources */,
+				E1FC8256C30473A34FAC7F09 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -503,6 +518,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SearchIOSApp-SearchIOSAppUITests/Pods-SearchIOSApp-SearchIOSAppUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E1FC8256C30473A34FAC7F09 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SearchIOSAppTests/Pods-SearchIOSAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SearchIOSAppTests/Pods-SearchIOSAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SearchIOSAppTests/Pods-SearchIOSAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F6A070656AE923FE0357E27B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -533,6 +565,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6917E40276385D100FA44BE /* ApiError.swift in Sources */,
+				B632777F2765A2B90091FE7C /* GitHubProfileParser.swift in Sources */,
 				B655ABBF2763730800501B8F /* ViewController.swift in Sources */,
 				B655ABBB2763730800501B8F /* AppDelegate.swift in Sources */,
 				B6917E372763816B00FA44BE /* GitHub.swift in Sources */,
@@ -542,6 +575,7 @@
 				B6917E2E2763764900FA44BE /* AppRouter.swift in Sources */,
 				B6917E422763CED200FA44BE /* UserCell.swift in Sources */,
 				B6917E322763794700FA44BE /* ViewModel.swift in Sources */,
+				B63277812765A4040091FE7C /* PrimitiveSequence+ConnectivityError.swift in Sources */,
 				B655ABBD2763730800501B8F /* SceneDelegate.swift in Sources */,
 				B6917E482763D02000FA44BE /* CellViewModel.swift in Sources */,
 				B6917E3A276381B800FA44BE /* GitHubDataStore.swift in Sources */,

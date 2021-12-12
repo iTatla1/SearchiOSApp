@@ -9,10 +9,13 @@ target 'SearchIOSApp' do
 
   pod 'Moya/RxSwift', '~> 15.0'
   pod 'Kingfisher', '~> 7.0'
+  pod 'RxCocoa'
 
   target 'SearchIOSAppTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'RxBlocking'
+    pod 'RxTest'
   end
 
   target 'SearchIOSAppUITests' do

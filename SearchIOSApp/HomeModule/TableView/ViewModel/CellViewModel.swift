@@ -11,7 +11,7 @@ import Foundation
 struct CellViewModel {
     private let profile: ProfileModel
     
-    init(profile: ProfileModel){
+    init(_ profile: ProfileModel){
         self.profile = profile
     }
     
