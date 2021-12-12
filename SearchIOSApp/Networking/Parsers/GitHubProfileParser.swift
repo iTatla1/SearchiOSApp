@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import Moya
 
-class GitHubProfileMapper {
+final class GitHubProfileMapper {
     
     private init(){}
     

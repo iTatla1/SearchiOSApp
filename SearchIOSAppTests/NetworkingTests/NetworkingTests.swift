@@ -84,6 +84,26 @@ class NetworkingTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
     
+    func test_OnFetch_returnsProfileModelArrayOnValidPResponses() {
+        
+        let item1 = makeProfileModel(name: "Profile1", type: "User", imageURL: URL(string: "http://www.anyurl.com")!)
+        let item2 = makeProfileModel(name: "Profile2", type: "Admin", imageURL: URL(string: "http://www.another-url.com")!)
+        let sut = makeSUT(for: 200, data: makeProfileModelsData(from: [item1.json, item2.json]))
+        
+        
+        let expectation = expectation(description: "Wait for async Code")
+        sut.fetchUsers(search: "23", pageNumber: 1, pageSize: 12)
+            .subscribe { profiles in
+                XCTAssertEqual(profiles, [item1.model, item2.model], "Expected to Complete with \([item1.model, item2.model])")
+                expectation.fulfill()
+            } onFailure: { error in
+                XCTFail("Expected to succeed with Profiles in Response")
+            }
+            .disposed(by: disposeBag)
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    
     
     // MARK: - Helper Methods
     
