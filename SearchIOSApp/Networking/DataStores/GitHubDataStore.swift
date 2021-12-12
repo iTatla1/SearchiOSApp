@@ -15,8 +15,11 @@ protocol GitHubDataStore {
 
 
 class GitHubDataStoreImpl: GitHubDataStore {
-    let provider = MoyaProvider<GitHub>()
-    let disposeBag = DisposeBag()
+    let provider: MoyaProvider<GitHub>
+    
+    init(provider: MoyaProvider<GitHub>) {
+        self.provider = provider
+    }
     
     func fetchUsers(search: String, pageNumber: Int, pageSize: Int) -> Single<[ProfileModel]> {
         return provider.rx.request(.searchUsers(query: search, page: pageNumber, pageSize: pageSize))
