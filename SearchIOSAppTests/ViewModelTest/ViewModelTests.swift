@@ -100,6 +100,7 @@ class ViewModelTests: XCTestCase {
         // Called search first time
         let searchString = "Search String"
         var viewModel = makeSUT(dataStore: dataStore, pagingController: paginationController)
+        XCTAssertEqual(paginationController.pageNumber, 1)
         viewModel.searchString = searchString
         XCTAssertTrue(dataStore.messages.count == 1)
         XCTAssertFalse(paginationController.isLastPage)
@@ -108,6 +109,7 @@ class ViewModelTests: XCTestCase {
         // Calling Next Page
         viewModel.nextPage()
         XCTAssertTrue(dataStore.messages.count == 2)
+        XCTAssertEqual(paginationController.pageNumber, 2)
         XCTAssertFalse(paginationController.isLastPage)
     
         // Calling third time should now paging controller be false
@@ -115,6 +117,7 @@ class ViewModelTests: XCTestCase {
         
         //Doesnot fetched search again
         XCTAssertTrue(dataStore.messages.count == 3)
+        XCTAssertEqual(paginationController.pageNumber, 3)
         XCTAssertTrue(paginationController.isLastPage)
     }
     
@@ -189,6 +192,25 @@ class ViewModelTests: XCTestCase {
         XCTAssertTrue(dataStore.messages.count == 0)
     }
     
+    func test_viewModel_OnPullToRefeshResetsSearch() {
+        
+        let dataStore = GitHubDataStoreSpy()
+        let searchString = "search string"
+
+        let paginationController = PagingController()
+        var viewModel = makeSUT(dataStore: dataStore, pagingController: paginationController)
+        viewModel.searchString = searchString
+        
+        XCTAssertTrue(dataStore.messages.count == 1)
+        XCTAssertTrue(paginationController.isLastPage)
+        
+        viewModel.pullToRefresh()
+        
+        //Search Called Second time
+        XCTAssertTrue(dataStore.messages.count == 2)
+        XCTAssertTrue(paginationController.isLastPage)
+    }
+
     
     // MARK: - Helpers
     
