@@ -168,6 +168,27 @@ class ViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
+    func test_viewModel_OnLoadingDoesNotCallSearch() {
+        
+        let dataStore = GitHubDataStoreSpy()
+        let searchString = "Search String"
+        var viewModel = makeSUT(dataStore: dataStore)
+        viewModel.loaderSubject.onNext(true)
+        viewModel.searchString = searchString
+        XCTAssertTrue(dataStore.messages.count == 0)
+        
+        
+    }
+    
+    func test_viewModel_emptySearchStringDoesNotCallSearch() {
+        
+        let dataStore = GitHubDataStoreSpy()
+        let emptySearchString = ""
+        var viewModel = makeSUT(dataStore: dataStore)
+        viewModel.searchString = emptySearchString
+        XCTAssertTrue(dataStore.messages.count == 0)
+    }
+    
     
     // MARK: - Helpers
     
